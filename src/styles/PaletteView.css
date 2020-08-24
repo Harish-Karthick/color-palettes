@@ -1,5 +1,6 @@
 .paletteview {
   height: 100vh;
+  overflow: hidden;
 }
 .colors-container {
   height: 90%;

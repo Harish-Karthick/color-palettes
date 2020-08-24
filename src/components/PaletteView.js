@@ -6,7 +6,11 @@ class PaletteView extends Component {
   render() {
     const { color } = this.props;
     const colorsList = color.colors.map((color) => (
-      <ColorBox background={color.color} name={color.name} />
+      <ColorBox
+        background={color.color}
+        name={color.name}
+        key={`${color.name}+${color.color}`}
+      />
     ));
     return (
       <div className='paletteview'>

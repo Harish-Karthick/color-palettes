@@ -1,12 +1,12 @@
 .colorbox {
   height: 25%;
   width: 20%;
-  display: inline-flex;
-  margin: 0 auto;
+  display: inline-block;
+  margin: 0 auto -0.25rem;
   position: relative;
   cursor: pointer;
-  align-items: flex-end;
 }
+
 .copy-button {
   display: inline-block;
   font-size: 1rem;
@@ -27,17 +27,78 @@
   opacity: 1;
 }
 
-.color-text {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+.color-name {
+  position: absolute;
+  bottom: 0.25rem;
   text-transform: uppercase;
-  margin: 0 0 0 0.5em;
-  align-items: center;
+  font-size: 1.125rem;
+  left: 0.5rem;
 }
+
 .see-more {
   display: inline-block;
+  text-transform: uppercase;
   background-color: rgba(255, 255, 255, 0.3);
   color: rgba(255, 255, 255, 1);
   padding: 0.25em 0.5em;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.copy-overlay {
+  opacity: 0;
+  z-index: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: scale(0.1);
+  transition: 0.3s ease-in-out;
+}
+
+.copy-overlay.show {
+  opacity: 1;
+  z-index: 10;
+  transform: scale(9);
+}
+
+.copy-message {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.copy-message.show {
+  opacity: 1;
+  z-index: 15;
+  transition: 0.2s opacity ease-in-out;
+  transition-delay: 0.3s;
+}
+
+.copy-message h1 {
+  width: 100%;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 1);
+  margin: 0;
+  padding: 1.25rem;
+  font-size: 4rem;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.copy-message p {
+  font-size: 1.25rem;
+  margin: 0.75rem 0 0;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 1);
 }

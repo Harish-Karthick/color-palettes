@@ -4,7 +4,7 @@ import PaletteView from "./components/PaletteView";
 function App() {
   return (
     <div className='App'>
-      <PaletteView color={seedColors[0]} />
+      <PaletteView color={{ ...seedColors[0] }} />
     </div>
   );
 }

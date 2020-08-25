@@ -1,0 +1,36 @@
+.Header {
+  display: flex;
+  align-items: center;
+}
+.NavLink {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  text-transform: lowercase;
+  color: rgba(0, 0, 0, 1);
+  transition: 0.2s all ease-in-out;
+  padding: 0.5em 1.5em;
+  background-color: rgb(230, 230, 230);
+  font-size: 1.5rem;
+}
+.NavLink:hover {
+  opacity: 0.8;
+}
+.NavLink__Text {
+  margin-left: 0.75rem;
+}
+.Slider__container {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+.Slider__label {
+  margin: 0 1rem;
+  font-weight: 600;
+}
+.Select__container {
+  flex-grow: 1;
+  display: inline-block;
+  max-width: 250px;
+  margin-right: 1rem;
+}

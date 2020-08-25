@@ -10,14 +10,16 @@ class InputSlider extends Component {
     this.props.changeLevel(event.target.value);
   }
   render() {
+    const { level, id } = this.props;
     return (
       <input
         className={classes.InputSlider}
         type='range'
-        value={this.props.level}
+        value={level}
         min='100'
         max='900'
         step='100'
+        id={id}
         onChange={this.handleChange}
       />
     );

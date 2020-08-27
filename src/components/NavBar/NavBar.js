@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -26,10 +27,10 @@ class NavBar extends Component {
     return (
       <header className={classes.Header}>
         <nav className={classes.NavBar}>
-          <a href='/' className={classes.NavLink}>
+          <Link to='/' className={classes.NavLink}>
             <img src={logo} alt='palette-logo' width='30' height='auto' />
             <span className={classes.NavLink__Text}>ReactPalettes</span>
-          </a>
+          </Link>
         </nav>
         <div className={classes.Slider__container}>
           <label htmlFor='colorLevelPicker' className={classes.Slider__label}>

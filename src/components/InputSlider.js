@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import classes from "./InputSlider.module.css";
+import { withStyles } from "@material-ui/core/styles";
+import inputSliderStyles from "../styles/InputSliderStyles";
 
 class InputSlider extends Component {
   constructor(props) {
@@ -10,10 +11,10 @@ class InputSlider extends Component {
     this.props.changeLevel(event.target.value);
   }
   render() {
-    const { level, id } = this.props;
+    const { level, id, classes } = this.props;
     return (
       <input
-        className={classes.InputSlider}
+        className={classes.inputSlider}
         type='range'
         value={level}
         min='100'
@@ -26,4 +27,4 @@ class InputSlider extends Component {
   }
 }
 
-export default InputSlider;
+export default withStyles(inputSliderStyles)(InputSlider);

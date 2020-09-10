@@ -7,9 +7,18 @@ export default {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    width: "100%",
     "& h1": {
       color: "#fff",
       margin: "1rem 0",
+    },
+    "& a": {
+      textDecoration: "none",
+      color: "#fff",
+      transition: "all 0.2s ease",
+      "&:hover": {
+        opacity: "0.75",
+      },
     },
   },
   container: {

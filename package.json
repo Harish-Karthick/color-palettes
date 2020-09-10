@@ -35,5 +35,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-color": "^2.18.1",
+    "react-material-ui-form-validator": "^2.1.1"
   }
 }

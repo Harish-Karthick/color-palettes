@@ -1,9 +1,9 @@
 import chroma from "chroma-js";
 export default {
   colorBox: {
-    height: (props) => (props.showingAllColors ? "25%" : "50%"),
-    backgroundColor: (props) =>
-      props.background !== undefined ? props.background : "#000",
+    height: ({ showingAllColors }) => (showingAllColors ? "25%" : "50%"),
+    backgroundColor: ({ background }) =>
+      background !== undefined ? background : "#000",
     width: "20%",
     display: "inline-block",
     margin: "0 auto -0.25rem",
@@ -14,8 +14,8 @@ export default {
     },
   },
   colorName: {
-    color: (props) =>
-      chroma.contrast(props.background, "#fff") >= 2 ? "#fff" : "#121212",
+    color: ({ background }) =>
+      chroma.contrast(background, "#fff") >= 2 ? "#fff" : "#121212",
     position: "absolute",
     bottom: "0.25rem",
     textTransform: "uppercase",
@@ -23,8 +23,8 @@ export default {
     left: "0.5rem",
   },
   copyButton: {
-    color: (props) =>
-      chroma.contrast(props.background, "#fff") >= 2 ? "#fff" : "#121212",
+    color: ({ background }) =>
+      chroma.contrast(background, "#fff") >= 2 ? "#fff" : "#121212",
     display: "inline-block",
     fontSize: "1rem",
     padding: "0.5em 1.5em",
@@ -40,8 +40,8 @@ export default {
     opacity: 0,
   },
   seeMore: {
-    color: (props) =>
-      chroma.contrast(props.background, "#fff") >= 2 ? "#fff" : "#121212",
+    color: ({ background }) =>
+      chroma.contrast(background, "#fff") >= 2 ? "#fff" : "#121212",
     display: "inline-block",
     textTransform: "uppercase",
     backgroundColor: "rgba(255, 255, 255, 0.3)",
@@ -51,8 +51,8 @@ export default {
     right: "0",
   },
   messageTitle: {
-    color: (props) =>
-      chroma.contrast(props.background, "#fff") >= 2
+    color: ({ background }) =>
+      chroma.contrast(background, "#fff") >= 2
         ? "#fff"
         : "rgba(100, 100, 100, 1)",
     width: "100%",
@@ -65,8 +65,8 @@ export default {
     fontWeight: "300",
   },
   messageColor: {
-    color: (props) =>
-      chroma.contrast(props.background, "#fff") >= 2
+    color: ({ background }) =>
+      chroma.contrast(background, "#fff") >= 2
         ? "#fff"
         : "rgba(100, 100, 100, 1)",
     fontSize: "1.25rem",
@@ -74,7 +74,7 @@ export default {
     textTransform: "uppercase",
   },
   copyOverlay: {
-    backgroundColor: (props) => props.background,
+    backgroundColor: ({ background }) => background,
     opacity: "0",
     zIndex: "0",
     position: "absolute",

@@ -13,7 +13,8 @@ import Divider from "@material-ui/core/Divider";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { Button } from "@material-ui/core";
 import { ChromePicker } from "react-color";
-import DraggableColorbox from "./DraggableColorbox";
+import { arrayMove } from "react-sortable-hoc";
+import DraggableColorList from "./DraggableColorList";
 
 const drawerWidth = 400;
 
@@ -83,13 +84,45 @@ class NewPaletteForm extends Component {
       open: true,
       currentColor: "#234267",
       currentColorName: "",
-      paletteColors: [],
+      paletteColors: [
+        { name: "red", color: "#F44336" },
+        { name: "pink", color: "#E91E63" },
+        { name: "purple", color: "#9C27B0" },
+        { name: "deeppurple", color: "#673AB7" },
+        { name: "indigo", color: "#3F51B5" },
+        { name: "blue", color: "#2196F3" },
+        { name: "lightblue", color: "#03A9F4" },
+        { name: "cyan", color: "#00BCD4" },
+        { name: "teal", color: "#009688" },
+        { name: "green", color: "#4CAF50" },
+      ],
+      newPaletteName: "",
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
     this.changeCurrentColor = this.changeCurrentColor.bind(this);
-    this.changeCurrentColorName = this.changeCurrentColorName.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.addColorToPalette = this.addColorToPalette.bind(this);
+    this.savePaletteSubmit = this.savePaletteSubmit.bind(this);
+    this.deleteColor = this.deleteColor.bind(this);
+    this.onSortEnd = this.onSortEnd.bind(this);
+  }
+  componentDidMount() {
+    ValidatorForm.addValidationRule("isColorNameUnique", (value) =>
+      this.state.paletteColors.every(
+        ({ name }) => name.toLowerCase() !== value.toLowerCase()
+      )
+    );
+    ValidatorForm.addValidationRule("isColorUnique", (value) =>
+      this.state.paletteColors.every(
+        ({ color }) => color !== this.state.currentColor
+      )
+    );
+    ValidatorForm.addValidationRule("isPaletteNameUnique", (value) =>
+      this.props.allPaletteColors.every(
+        ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
+      )
+    );
   }
   handleDrawerOpen() {
     this.setState({ open: true });
@@ -97,8 +130,8 @@ class NewPaletteForm extends Component {
   handleDrawerClose() {
     this.setState({ open: false });
   }
-  changeCurrentColorName(event) {
-    this.setState({ currentColorName: event.target.value });
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
   changeCurrentColor(newColor) {
     this.setState({ currentColor: newColor.hex });
@@ -113,27 +146,43 @@ class NewPaletteForm extends Component {
       currentColorName: "",
     }));
   }
-  componentDidMount() {
-    ValidatorForm.addValidationRule("isColorNameUnique", (value) =>
-      this.state.paletteColors.every(
-        ({ name }) => name.toLowerCase() !== value.toLowerCase()
-      )
-    );
-    ValidatorForm.addValidationRule("isColorUnique", (value) =>
-      this.state.paletteColors.every(
-        ({ color }) => color !== this.state.currentColor
-      )
-    );
+  savePaletteSubmit() {
+    let newPaletteName = this.state.newPaletteName;
+    const paletteToSave = {
+      paletteName: newPaletteName,
+      id: newPaletteName.toLowerCase().replace(/ /g, "-"),
+      colors: this.state.paletteColors,
+    };
+    this.props.savePalette(paletteToSave);
+    this.props.history.push("/");
   }
-
+  deleteColor(colorName) {
+    this.setState((prevState) => ({
+      paletteColors: prevState.paletteColors.filter(
+        (color) => color.name !== colorName
+      ),
+    }));
+  }
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    this.setState(({ paletteColors }) => ({
+      paletteColors: arrayMove(paletteColors, oldIndex, newIndex),
+    }));
+  };
   render() {
-    const { open, currentColor, currentColorName } = this.state;
+    const {
+      open,
+      currentColor,
+      currentColorName,
+      paletteColors,
+      newPaletteName,
+    } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
           position='fixed'
+          color='default'
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
           })}
@@ -151,6 +200,22 @@ class NewPaletteForm extends Component {
             <Typography variant='h6' noWrap>
               Persistent drawer
             </Typography>
+            <ValidatorForm onSubmit={this.savePaletteSubmit}>
+              <TextValidator
+                label='Palette Name'
+                name='newPaletteName'
+                value={newPaletteName}
+                onChange={this.handleChange}
+                validators={["required", "isPaletteNameUnique"]}
+                errorMessages={[
+                  "Palette name required",
+                  "Plaette name already taken",
+                ]}
+              />
+              <Button variant='contained' color='primary' type='submit'>
+                Save Palette
+              </Button>
+            </ValidatorForm>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -184,10 +249,10 @@ class NewPaletteForm extends Component {
           <ValidatorForm onSubmit={this.addColorToPalette}>
             <TextValidator
               label='Color Name'
-              name='color name'
               type='text'
+              name='currentColorName'
               value={currentColorName}
-              onChange={this.changeCurrentColorName}
+              onChange={this.handleChange}
               validators={["required", "isColorNameUnique", "isColorUnique"]}
               errorMessages={[
                 "This field is required",
@@ -209,7 +274,14 @@ class NewPaletteForm extends Component {
           className={clsx(classes.content, {
             [classes.contentShift]: open,
           })}
-        ></main>
+        >
+          <DraggableColorList
+            allColors={paletteColors}
+            deleteColor={this.deleteColor}
+            axis='xy'
+            onSortEnd={this.onSortEnd}
+          />
+        </main>
       </div>
     );
   }

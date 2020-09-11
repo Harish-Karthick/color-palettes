@@ -16,7 +16,7 @@ export default {
       background: "rgba(210, 210, 210)",
       border: "0px solid #000101",
     },
-    "&::::-webkit-slider-thumb": {
+    "&::-webkit-slider-thumb": {
       border: "0px solid #000000",
       height: 12,
       width: 12,

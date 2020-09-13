@@ -34,6 +34,7 @@ const draggableColorboxStyles = {
     justifyContent: "space-between",
     padding: 10,
     alignItems: "center",
+    textTransform: "uppercase",
   },
   deleteButton: {
     color: ({ background }) =>

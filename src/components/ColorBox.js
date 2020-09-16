@@ -26,7 +26,6 @@ class ColorBox extends Component {
       <CopyToClipboard text={background} onCopy={this.toggleOverlay}>
         <div className={classes.colorBox}>
           <div
-            style={{ background }}
             className={`${classes.copyOverlay} ${
               overlayShow && classes.showCopyOverlay
             }`}

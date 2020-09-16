@@ -9,6 +9,12 @@ export default {
     "&:hover": {
       cursor: "pointer",
     },
+    "&:hover button": {
+      opacity: "1",
+    },
+    "&:hover svg": {
+      fill: "#fff",
+    },
   },
   colors: {
     height: "150px",
@@ -36,5 +42,25 @@ export default {
     display: "inline-block",
     margin: "0 auto -3.5px",
     position: "relative",
+  },
+  deleteButton: {
+    backgroundColor: "#ff5252",
+    border: "0",
+    padding: "0.5rem",
+    position: "absolute",
+    zIndex: "10",
+    top: "0",
+    right: "0",
+    opacity: "0",
+    transition: "all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;",
+    "&:focus": {
+      outline: "none",
+    },
+    "&:active": {
+      transform: "scale(0.9)",
+    },
+  },
+  deleteIcon: {
+    fill: "none",
   },
 };

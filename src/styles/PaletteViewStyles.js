@@ -4,6 +4,6 @@ export default {
     overflow: "hidden",
   },
   colorsContainer: {
-    height: "90%",
+    height: "calc(100vh - 5vh - 56px)",
   },
 };

@@ -1,4 +1,5 @@
 import chroma from "chroma-js";
+import mediaQuery from "../utils/mediaQueryHelper";
 export default {
   colorBox: {
     height: ({ showingAllColors }) => (showingAllColors ? "25%" : "50%"),
@@ -11,6 +12,18 @@ export default {
     cursor: "pointer",
     "&:hover button": {
       opacity: 1,
+    },
+    [mediaQuery.down("lg")]: {
+      width: "25%",
+      height: ({ showingAllColors }) => (showingAllColors ? "20%" : "33.3333%"),
+    },
+    [mediaQuery.down("md")]: {
+      width: "50%",
+      height: ({ showingAllColors }) => (showingAllColors ? "10%" : "20%"),
+    },
+    [mediaQuery.down("xs")]: {
+      width: "100%",
+      height: ({ showingAllColors }) => (showingAllColors ? "5%" : "10%"),
     },
   },
   colorName: {
@@ -63,6 +76,9 @@ export default {
     fontSize: "4rem",
     textTransform: "uppercase",
     fontWeight: "300",
+    [mediaQuery.down("xs")]: {
+      fontSize: "2.5rem",
+    },
   },
   messageColor: {
     color: ({ background }) =>
@@ -72,21 +88,24 @@ export default {
     fontSize: "1.25rem",
     margin: "0.75rem 0 0",
     textTransform: "uppercase",
+    [mediaQuery.down("xs")]: {
+      fontSize: "1rem",
+    },
   },
   copyOverlay: {
     backgroundColor: ({ background }) => background,
     opacity: "0",
     zIndex: "0",
-    position: "absolute",
     width: "100%",
     height: "100%",
+    transition: "transform 0.6s ease-in-out",
     transform: "scale(0.1)",
   },
   showCopyOverlay: {
     opacity: "1",
+    transform: "scale(50)",
     zIndex: "10",
-    transform: "scale(9)",
-    transition: "0.6s ease-in-out",
+    position: "absolute",
   },
   copyMessage: {
     position: "fixed",

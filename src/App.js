@@ -9,21 +9,44 @@ import NewPaletteForm from "./components/NewPaletteForm";
 class App extends Component {
   constructor(props) {
     super(props);
+    const localStoragePalettes = JSON.parse(
+      window.localStorage.getItem("palettes")
+    );
     this.state = {
-      allPaletteColors: seedColors,
+      allPaletteColors: localStoragePalettes || seedColors,
     };
     this.findPalette = this.findPalette.bind(this);
     this.savePalette = this.savePalette.bind(this);
+    this.deletePalette = this.deletePalette.bind(this);
   }
   savePalette(newPalette) {
-    this.setState((prevState) => ({
-      allPaletteColors: [...prevState.allPaletteColors, newPalette],
-    }));
+    this.setState(
+      (prevState) => ({
+        allPaletteColors: [...prevState.allPaletteColors, newPalette],
+      }),
+      this.syncLocalStorage
+    );
+  }
+  deletePalette(id) {
+    this.setState(
+      (prevState) => ({
+        allPaletteColors: prevState.allPaletteColors.filter(
+          (palette) => palette.id !== id
+        ),
+      }),
+      this.syncLocalStorage
+    );
   }
   findPalette(id) {
     return this.state.allPaletteColors.find((palette) => {
       return palette.id === id;
     });
+  }
+  syncLocalStorage() {
+    window.localStorage.setItem(
+      "palettes",
+      JSON.stringify(this.state.allPaletteColors)
+    );
   }
   render() {
     return (
@@ -69,6 +92,7 @@ class App extends Component {
             <PlaetteList
               allPalettes={this.state.allPaletteColors}
               {...routeProps}
+              handleDelete={this.deletePalette}
             />
           )}
         />

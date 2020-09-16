@@ -1,3 +1,4 @@
+import mediaQuery from "../utils/mediaQueryHelper";
 export default {
   header: {
     display: "flex",
@@ -15,6 +16,10 @@ export default {
     fontSize: "1.5rem",
     "&:hover": {
       opacity: 0.8,
+    },
+    [mediaQuery.down("xs")]: {
+      display: ({ showSlider }) => (showSlider ? "none" : "inline-flex"),
+      padding: "0.5em 1em",
     },
   },
   navLinkText: {
@@ -35,6 +40,9 @@ export default {
     maxWidth: 250,
     marginRight: "1rem",
     marginLeft: "auto",
+    [mediaQuery.down("xs")]: {
+      marginRight: 0,
+    },
   },
   selectInput: {
     width: "100%",

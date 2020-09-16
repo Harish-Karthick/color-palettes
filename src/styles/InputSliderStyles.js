@@ -1,8 +1,9 @@
+import mediaQuery from "../utils/mediaQueryHelper";
 export default {
   inputSlider: {
     WebkitAppearance: "none",
     marginTop: 3,
-    maxWidth: 300,
+    maxWidth: "300px",
     width: "80%",
     display: "inline-block",
     "&:focus": {
@@ -79,6 +80,15 @@ export default {
     },
     "&:focus::-ms-fill-upper": {
       background: "rgba(210, 210, 210)",
+    },
+    [mediaQuery.down("lg")]: {
+      width: "200px",
+    },
+    [mediaQuery.down("md")]: {
+      width: "150px",
+    },
+    [mediaQuery.down("md")]: {
+      width: "125px",
     },
   },
 };

@@ -1,4 +1,6 @@
-const drawerWidth = 400;
+import { DRAWER_WIDTH } from "../utils/constants";
+const drawerWidth = DRAWER_WIDTH;
+
 export default (theme) => ({
   appBar: {
     display: "flex",
@@ -15,6 +17,10 @@ export default (theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  toolBar: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -26,15 +32,9 @@ export default (theme) => ({
     alignItems: "center",
   },
   navbarForm: {
-    marginLeft: "auto",
     display: "flex",
-    alignItems: "center",
-    "& form": {
-      display: "flex",
-      alignItems: "center",
-    },
     "& button": {
-      marginLeft: "0.5rem",
+      marginLeft: theme.spacing(2),
     },
   },
   goBackButton: {

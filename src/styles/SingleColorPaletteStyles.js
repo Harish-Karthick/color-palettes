@@ -1,10 +1,11 @@
+import mediaQuery from "../utils/mediaQueryHelper";
 export default {
   paletteView: {
     height: "100vh",
     overflow: "hidden",
   },
   colorsContainer: {
-    height: "90%",
+    height: "calc(100vh - 5vh - 56px)",
   },
   backBox: {
     display: "inline-block",
@@ -14,6 +15,18 @@ export default {
     backgroundColor: "rgba(0, 0, 0, 1)",
     height: "50%",
     width: "20%",
+    [mediaQuery.down("lg")]: {
+      width: "25%",
+      height: "33.3333%",
+    },
+    [mediaQuery.down("md")]: {
+      width: "50%",
+      height: "20%",
+    },
+    [mediaQuery.down("xs")]: {
+      width: "100%",
+      height: "10%",
+    },
   },
   backButton: {
     color: "#ffffff",

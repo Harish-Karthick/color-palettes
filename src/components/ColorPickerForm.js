@@ -60,7 +60,8 @@ class ColorPickerForm extends Component {
             name='currentColorName'
             value={currentColorName}
             onChange={this.handleChange}
-            className={classes.inputField}
+            fullWidth
+            margin='normal'
             validators={["required", "isColorNameUnique", "isColorUnique"]}
             errorMessages={[
               "This field is required",

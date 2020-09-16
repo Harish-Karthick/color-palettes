@@ -5,68 +5,13 @@ import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import Divider from "@material-ui/core/Divider";
 import { Button } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import arrayMove from "array-move";
 import DraggableColorList from "./DraggableColorList";
 import NewPaletteFormNav from "./NewPaletteFormNav";
 import ColorPickerForm from "./ColorPickerForm";
-
-const drawerWidth = 400;
-
-const drawerStyles = (theme) => ({
-  root: {
-    display: "flex",
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
-  },
-  content: {
-    flexGrow: 1,
-    height: "calc(100vh - 64px)",
-    marginTop: "64px",
-    padding: "0",
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
-  newColorFormContainer: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "0 1rem",
-  },
-  buttonContainer: {
-    margin: "1rem 0",
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-evenly",
-  },
-});
+import drawerStyles from "../styles/NewPaletteFormStyles";
 
 class NewPaletteForm extends Component {
   static defaultProps = {
@@ -107,10 +52,11 @@ class NewPaletteForm extends Component {
       currentColorName: "",
     }));
   }
-  savePaletteSubmit(newName) {
+  savePaletteSubmit(newPaletteInfo) {
     const paletteToSave = {
-      paletteName: newName,
-      id: newName.toLowerCase().replace(/ /g, "-"),
+      paletteName: newPaletteInfo.paletteName,
+      id: newPaletteInfo.paletteName.toLowerCase().replace(/ /g, "-"),
+      emoji: newPaletteInfo.emoji,
       colors: this.state.paletteColors,
     };
     this.props.savePalette(paletteToSave);
@@ -174,7 +120,6 @@ class NewPaletteForm extends Component {
               <ChevronLeftIcon />
             </IconButton>
           </div>
-          <Divider />
           <div className={classes.newColorFormContainer}>
             <Typography variant='h4' noWrap>
               Design Your Palette

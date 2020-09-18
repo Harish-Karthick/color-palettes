@@ -27,7 +27,13 @@ class NewPaletteFormNav extends Component {
     this.setState({ showingPaletteNameForm: false });
   }
   render() {
-    const { classes, open, allPaletteColors } = this.props;
+    const {
+      classes,
+      open,
+      allPaletteColors,
+      handleDrawerOpen,
+      handleSubmit,
+    } = this.props;
 
     return (
       <>
@@ -43,7 +49,7 @@ class NewPaletteFormNav extends Component {
               <IconButton
                 color='inherit'
                 aria-label='open drawer'
-                onClick={this.props.handleDrawerOpen}
+                onClick={handleDrawerOpen}
                 edge='start'
                 className={clsx(classes.menuButton, open && classes.hide)}
               >
@@ -72,7 +78,7 @@ class NewPaletteFormNav extends Component {
         {this.state.showingPaletteNameForm && (
           <PaletteNameForm
             allPaletteColors={allPaletteColors}
-            handleSubmit={this.props.handleSubmit}
+            handleSubmit={handleSubmit}
             closeDialog={this.hidePaletteNameForm}
             showing={this.state.showingPaletteNameForm}
           />

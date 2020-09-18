@@ -8,6 +8,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { Button } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import arrayMove from "array-move";
+import seedColors from "../utils/seedColors";
 import DraggableColorList from "./DraggableColorList";
 import NewPaletteFormNav from "./NewPaletteFormNav";
 import ColorPickerForm from "./ColorPickerForm";
@@ -23,7 +24,7 @@ class NewPaletteForm extends Component {
       open: true,
       currentColor: "#234267",
       currentColorName: "",
-      paletteColors: this.props.allPaletteColors[0].colors,
+      paletteColors: seedColors[0].colors,
     };
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
@@ -73,19 +74,20 @@ class NewPaletteForm extends Component {
     this.setState({ paletteColors: [] });
   }
   addRandomColor() {
-    const allPaletteColors = this.props.allPaletteColors
-      .map((p) => p.colors)
-      .flat();
-    const paletteSet = new Set(this.state.paletteColors.map((p) => p.color));
+    const allPaletteColors = seedColors.map((p) => p.colors).flat();
     let randomNumber;
+    let isColorRepeated = true;
+    let randomColor;
     do {
       randomNumber = Math.floor(Math.random() * allPaletteColors.length);
-    } while (paletteSet.has(allPaletteColors[randomNumber].color) === true);
+      randomColor = allPaletteColors[randomNumber];
+      isColorRepeated = this.state.paletteColors.some(
+        // eslint-disable-next-line
+        (color) => color.color === randomColor
+      );
+    } while (isColorRepeated);
     this.setState((prevState) => ({
-      paletteColors: [
-        ...prevState.paletteColors,
-        allPaletteColors[randomNumber],
-      ],
+      paletteColors: [...prevState.paletteColors, randomColor],
     }));
   }
   onSortEnd = ({ oldIndex, newIndex }) => {
@@ -95,7 +97,7 @@ class NewPaletteForm extends Component {
   };
   render() {
     const { open, paletteColors } = this.state;
-    const { classes, maxColors } = this.props;
+    const { classes, maxColors, allPaletteColors } = this.props;
     const isPaletteFull = paletteColors.length >= maxColors;
     return (
       <div className={classes.root}>
@@ -103,7 +105,7 @@ class NewPaletteForm extends Component {
         <NewPaletteFormNav
           open={open}
           handleDrawerOpen={this.handleDrawerOpen}
-          allPaletteColors={this.props.allPaletteColors}
+          allPaletteColors={allPaletteColors}
           handleSubmit={this.savePaletteSubmit}
         />
         <Drawer

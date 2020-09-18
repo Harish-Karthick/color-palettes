@@ -39,14 +39,16 @@ class PaletteNameForm extends Component {
       emoji: emoji.native,
     };
     this.props.handleSubmit(newPaletteInfo);
+    this.setState({ form: "" });
   }
   render() {
-    const { newPaletteName } = this.state;
+    const { showing, closeDialog } = this.props;
+    const { newPaletteName, form } = this.state;
     return (
       <div>
         <Dialog
-          open={this.props.showing && this.state.form === "paletteName"}
-          onClose={this.props.closeDialog}
+          open={showing && form === "paletteName"}
+          onClose={closeDialog}
           aria-labelledby='form-dialog-title'
         >
           <DialogTitle id='form-dialog-title'>Save Palette</DialogTitle>
@@ -73,7 +75,7 @@ class PaletteNameForm extends Component {
             <DialogActions>
               <Button
                 variant='contained'
-                onClick={this.props.closeDialog}
+                onClick={closeDialog}
                 color='secondary'
               >
                 Cancel
@@ -90,8 +92,8 @@ class PaletteNameForm extends Component {
           </ValidatorForm>
         </Dialog>
         <Dialog
-          open={this.props.showing && this.state.form === "emoji"}
-          onClose={this.props.closeDialog}
+          open={showing && form === "emoji"}
+          onClose={closeDialog}
           aria-labelledby='form-dialog-title'
         >
           <DialogTitle id='form-dialog-title'>

@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import seedColors from "./utils/seedColors";
 import { generateColors } from "./utils/colorHelpers";
 import PaletteView from "./components/PaletteView";
 import PlaetteList from "./components/PaletteList";
 import SingleColorPalette from "./components/SingleColorPalette";
 import NewPaletteForm from "./components/NewPaletteForm";
+import Page from "./components/Page";
+import "./styles/Transitions.css";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -50,53 +53,72 @@ class App extends Component {
   }
   render() {
     return (
-      <Switch>
-        <Route
-          exact
-          path='/palette/new'
-          render={(routeProps) => (
-            <NewPaletteForm
-              savePalette={this.savePalette}
-              {...routeProps}
-              allPaletteColors={this.state.allPaletteColors}
-            />
-          )}
-        />
-        <Route
-          exact
-          path='/palette/:paletteId/:colorId'
-          render={(routeProps) => (
-            <SingleColorPalette
-              palette={generateColors(
-                this.findPalette(routeProps.match.params.paletteId)
-              )}
-              colorId={routeProps.match.params.colorId}
-            />
-          )}
-        />
-        <Route
-          exact
-          path='/palette/:id'
-          render={(routeProps) => (
-            <PaletteView
-              palette={generateColors(
-                this.findPalette(routeProps.match.params.id)
-              )}
-            />
-          )}
-        />
-        <Route
-          exact
-          path='/'
-          render={(routeProps) => (
-            <PlaetteList
-              allPalettes={this.state.allPaletteColors}
-              {...routeProps}
-              handleDelete={this.deletePalette}
-            />
-          )}
-        />
-      </Switch>
+      <Route
+        render={({ location }) => (
+          <TransitionGroup>
+            <CSSTransition key={location.key} classNames='fade' timeout={500}>
+              <Switch location={location}>
+                <Route
+                  exact
+                  path='/palette/new'
+                  render={(routeProps) => (
+                    <Page>
+                      <NewPaletteForm
+                        savePalette={this.savePalette}
+                        {...routeProps}
+                        allPaletteColors={this.state.allPaletteColors}
+                      />
+                    </Page>
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/palette/:paletteId/:colorId'
+                  render={(routeProps) => (
+                    <Page>
+                      <SingleColorPalette
+                        palette={generateColors(
+                          this.findPalette(routeProps.match.params.paletteId)
+                        )}
+                        colorId={routeProps.match.params.colorId}
+                      />
+                    </Page>
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/palette/:id'
+                  render={(routeProps) => (
+                    <Page>
+                      <PaletteView
+                        palette={generateColors(
+                          this.findPalette(routeProps.match.params.id)
+                        )}
+                      />
+                    </Page>
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/'
+                  render={(routeProps) => (
+                    <Page>
+                      <PlaetteList
+                        allPalettes={this.state.allPaletteColors}
+                        {...routeProps}
+                        handleDelete={this.deletePalette}
+                      />
+                    </Page>
+                  )}
+                />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
+        )}
+      />
     );
   }
 }
